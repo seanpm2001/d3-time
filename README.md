@@ -129,7 +129,7 @@ The returned filtered interval does not support [*interval*.count](#interval_cou
 
 <a name="interval_every" href="#interval_every">#</a> <i>interval</i>.<b>every</b>(<i>step</i>) · [Source](https://github.com/d3/d3-time/blob/main/src/interval.js)
 
-Returns a [filtered](#interval_filter) view of this interval representing every *step*th date. The meaning of *step* is dependent on this interval’s parent interval as defined by the field function. For example, [d3.timeMinute](#timeMinute).every(15) returns an interval representing every fifteen minutes, starting on the hour: :00, :15, :30, :45, <i>etc.</i> Note that for some intervals, the resulting dates may not be uniformly-spaced; [d3.timeDay](#timeDay)’s parent interval is [d3.timeMonth](#timeMonth), and thus the interval number resets at the start of each month. If *step* is not valid, returns null. If *step* is one, returns this interval.
+Returns a [filtered](#interval_filter) view of this interval representing every *step*th date. ~~The meaning of *step* is dependent on this interval’s parent interval as defined by the field function.~~ For example, [d3.timeMinute](#timeMinute).every(15) returns an interval representing every fifteen minutes, starting on the hour: :00, :15, :30, :45, <i>etc.</i> ~~Note that for some intervals, the resulting dates may not be uniformly-spaced; [d3.timeDay](#timeDay)’s parent interval is [d3.timeMonth](#timeMonth), and thus the interval number resets at the start of each month.~~ TODO They are now uniformly spaced, but they may not be aligned with the parent interval; for example, [d3.timeHour](#timeHour).every(12) may not return 12AM or 12PM due to daylight savings time. If *step* is not valid, returns null. If *step* is one, returns this interval.
 
 This method can be used in conjunction with [*interval*.range](#interval_range) to ensure that two overlapping ranges are consistent. For example, this range contains odd days:
 
@@ -169,7 +169,7 @@ The *offset* function takes a date and an integer step as arguments and advances
 
 The optional *count* function takes a start date and an end date, already floored to the current interval, and returns the number of boundaries between the start (exclusive) and end (inclusive). If a *count* function is not specified, the returned interval does not expose [*interval*.count](#interval_count) or [*interval*.every](#interval_every) methods. Note: due to an internal optimization, the specified *count* function must not invoke *interval*.count on other time intervals.
 
-The optional *field* function takes a date, already floored to the current interval, and returns the field value of the specified date, corresponding to the number of boundaries between this date (exclusive) and the latest previous parent boundary. For example, for the [d3.timeDay](#timeDay) interval, this returns the number of days since the start of the month. If a *field* function is not specified, it defaults to counting the number of interval boundaries since the UNIX epoch of January 1, 1970 UTC. The *field* function defines the behavior of [*interval*.every](#interval_every).
+~~The optional *field* function takes a date, already floored to the current interval, and returns the field value of the specified date, corresponding to the number of boundaries between this date (exclusive) and the latest previous parent boundary. For example, for the [d3.timeDay](#timeDay) interval, this returns the number of days since the start of the month. If a *field* function is not specified, it defaults to counting the number of interval boundaries since the UNIX epoch of January 1, 1970 UTC. The *field* function defines the behavior of [*interval*.every](#interval_every).~~ TODO This is now an *epoch* argument.
 
 ### Intervals
 
@@ -197,9 +197,8 @@ Hours (e.g., 01:00 AM); 60 minutes. Note that advancing time by one hour in loca
 
 <a name="timeDay" href="#timeDay">#</a> d3.<b>timeDay</b> · [Source](https://github.com/d3/d3-time/blob/main/src/day.js "Source")
 <br><a href="#timeDay">#</a> d3.<b>utcDay</b> · [Source](https://github.com/d3/d3-time/blob/main/src/day.js)
-<br><a href="#timeDay">#</a> d3.<b>unixDay</b> · [Source](https://github.com/d3/d3-time/blob/main/src/day.js)
 
-Days (e.g., February 7, 2012 at 12:00 AM); typically 24 hours. Days in local time may range from 23 to 25 hours due to daylight saving. d3.unixDay is like [d3.utcDay](#timeDay), except it counts days since the UNIX epoch (January 1, 1970) such that *interval*.every returns uniformly-spaced dates rather than varying based on day-of-month.
+Days (e.g., February 7, 2012 at 12:00 AM); typically 24 hours. Days in local time may range from 23 to 25 hours due to daylight saving.
 
 <a name="timeWeek" href="#timeWeek">#</a> d3.<b>timeWeek</b> · [Source](https://github.com/d3/d3-time/blob/main/src/week.js "Source")
 <br><a href="#timeWeek">#</a> d3.<b>utcWeek</b> · [Source](https://github.com/d3/d3-time/blob/main/src/utcWeek.js "Source")
@@ -277,9 +276,8 @@ Aliases for [d3.timeHour](#timeHour).[range](#interval_range) and [d3.utcHour](#
 
 <a name="timeDays" href="#timeDays">#</a> d3.<b>timeDays</b>(<i>start</i>, <i>stop</i>[, <i>step</i>]) · [Source](https://github.com/d3/d3-time/blob/main/src/day.js)
 <br><a href="#timeDays">#</a> d3.<b>utcDays</b>(<i>start</i>, <i>stop</i>[, <i>step</i>]) · [Source](https://github.com/d3/d3-time/blob/main/src/day.js)
-<br><a href="#timeDays">#</a> d3.<b>unixDays</b>(<i>start</i>, <i>stop</i>[, <i>step</i>]) · [Source](https://github.com/d3/d3-time/blob/main/src/day.js)
 
-Aliases for [d3.timeDay](#timeDay).[range](#interval_range), [d3.utcDay](#timeDay).[range](#interval_range), and [d3.unixDay](#timeDay).[range](#interval_range).
+Aliases for [d3.timeDay](#timeDay).[range](#interval_range) and [d3.utcDay](#timeDay).[range](#interval_range).
 
 <a name="timeWeeks" href="#timeWeeks">#</a> d3.<b>timeWeeks</b>(<i>start</i>, <i>stop</i>[, <i>step</i>])
 <br><a href="#timeWeeks">#</a> d3.<b>utcWeeks</b>(<i>start</i>, <i>stop</i>[, <i>step</i>])
